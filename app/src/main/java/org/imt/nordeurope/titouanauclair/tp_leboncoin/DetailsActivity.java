@@ -5,6 +5,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.text.LineBreaker;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -33,11 +35,16 @@ public class DetailsActivity extends AppCompatActivity {
         TextView titre = findViewById(R.id.nomAnnonce_details);
         TextView annee = findViewById(R.id.anneeAnnonce_details);
         TextView prix = findViewById(R.id.prixAnnonce_details);
+        TextView description = findViewById(R.id.descAnnonce_details);
 
         image.setImageResource(model.getImageAnnonce());
         titre.setText(model.getNomAnnonce());
         annee.setText("Année : " + model.getAnneeAnnonce());
         prix.setText(model.getPrixAnnonce().toString()+ " €");
+        description.setText(model.getDescription());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            description.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
+        }
     }
 
     @Override

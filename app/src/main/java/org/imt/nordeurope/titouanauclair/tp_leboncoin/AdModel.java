@@ -7,18 +7,20 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class AdModel implements Serializable {
-    int idAnnonce;
-    String nomAnnonce;
-    Double prixAnnonce;
-    int ImageAnnonce;
-    int anneeAnnonce;
+    public int idAnnonce;
+    private String nomAnnonce;
+    private Double prixAnnonce;
+    private int ImageAnnonce;
+    private int anneeAnnonce;
+    private String description;
 
-    public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce){
+    public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce, String description){
         this.idAnnonce = generateId();
         this.nomAnnonce = nomAnnonce;
         this.prixAnnonce = prixAnnonce;
         this.ImageAnnonce = ImageAnnonce;
         this.anneeAnnonce = anneeAnnonce;
+        this.description = description;
     }
 
     public String getNomAnnonce() {
@@ -59,6 +61,14 @@ public class AdModel implements Serializable {
 
     public void setIdAnnonce(int idAnnonce) {
         this.idAnnonce = idAnnonce;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     private int generateId() {
