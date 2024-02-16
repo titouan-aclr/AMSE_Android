@@ -28,7 +28,9 @@ public class AnnoncesListe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annonces_liste);
         listView = findViewById(R.id.listeVehicules);
-
+        dbManager = DBManager.getDBManager(getApplicationContext());
+        dbManager.open();
+        loadFromDatabase();
         adapter = new AdAdapter(getApplicationContext(), listedAnnonces);
 
         listView.setAdapter(adapter);

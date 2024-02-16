@@ -16,7 +16,7 @@ public class DBManager {
 
     private DBManager(Context c) {
         context = c;
-        //init(); // Useful for adding ads for the first time.
+        init(); // Useful for adding ads for the first time.
     }
 
     public static DBManager getDBManager(Context context) {
@@ -76,11 +76,8 @@ public class DBManager {
     }
 
     public Cursor fetch() {
-        String[] columns = new String[] { DBHelper._ID, DBHelper.TITLE, DBHelper.PRICE, DBHelper.IMAGE};
+        String[] columns = new String[] { DBHelper._ID, DBHelper.TITLE, DBHelper.PRICE, DBHelper.IMAGE, DBHelper.ANNEE};
         Cursor cursor = database.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
         return cursor;
     }
 

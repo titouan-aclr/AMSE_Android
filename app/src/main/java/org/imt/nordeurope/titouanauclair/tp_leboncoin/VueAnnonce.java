@@ -26,7 +26,7 @@ public class VueAnnonce extends AppCompatActivity {
 
     public ImageView imageProduct;
     public TextView price;
-    public TextView address;
+    public TextView nom;
     private Button sendButton;
     private String filePath;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -36,7 +36,7 @@ public class VueAnnonce extends AppCompatActivity {
         setContentView(R.layout.activity_vue_annonce);
         imageProduct  = (ImageView) findViewById(R.id.imageProduct);
         price = (TextView) findViewById(R.id.price);
-        address = (TextView) findViewById(R.id.description);
+        nom = (TextView) findViewById(R.id.description);
         sendButton = (Button) findViewById(R.id.sendButton);
 
         imageProduct.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +48,15 @@ public class VueAnnonce extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AdModel nouvelleAnnonce = new AdModel(50, nom.getText().toString(), Double.parseDouble(price.getText().toString()), R.drawable.a, 2024);
 
+                DBManager dbManager = DBManager.getDBManager(getApplicationContext());
+
+                dbManager.open();
+
+                dbManager.insert(nouvelleAnnonce);
+
+                dbManager.close();
             }
         });
 
