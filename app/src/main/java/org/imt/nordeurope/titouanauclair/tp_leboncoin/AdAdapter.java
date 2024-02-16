@@ -39,9 +39,6 @@ public class AdAdapter extends BaseAdapter {
         TextView nomAnnonce_item = convertView.findViewById(R.id.nomAnnonce_item);
         TextView prixAnnonce_item = convertView.findViewById(R.id.prixAnnonce_item) ;
 
-        Log.d("compare", Integer.toString(R.drawable.a));
-        Log.d("imageAnnonce", Integer.toString(adModelArrayList.get(i).getImageAnnonce()));
-
         imageAnnonce_item.setImageResource(adModelArrayList.get(i).getImageAnnonce());
         nomAnnonce_item.setText(adModelArrayList.get(i).getNomAnnonce());
         prixAnnonce_item.setText(adModelArrayList.get(i).getPrixAnnonce().toString());

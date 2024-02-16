@@ -3,6 +3,8 @@ package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.Random;
+
 public class AdModel {
     int idAnnonce;
     String nomAnnonce;
@@ -10,8 +12,8 @@ public class AdModel {
     int ImageAnnonce;
     int anneeAnnonce;
 
-    public AdModel(int idAnnonce, String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce){
-        this.idAnnonce = idAnnonce;
+    public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce){
+        this.idAnnonce = generateId();
         this.nomAnnonce = nomAnnonce;
         this.prixAnnonce = prixAnnonce;
         this.ImageAnnonce = ImageAnnonce;
@@ -56,6 +58,11 @@ public class AdModel {
 
     public void setIdAnnonce(int idAnnonce) {
         this.idAnnonce = idAnnonce;
+    }
+
+    private int generateId() {
+        Random r = new Random();
+        return r.nextInt(999999999);
     }
 };
 

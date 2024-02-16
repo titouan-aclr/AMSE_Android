@@ -16,16 +16,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickList(View view){
-        //Intent lancementSecondeActivite = new Intent(MainActivity.this , SecondActivity . class );
-        Log.d("Button click", "Clic sur list");
-        //startActivity (lancementSecondeActivite);
+        Intent lauchListActivity = new Intent(MainActivity.this , AnnoncesListe.class );
+        startActivity (lauchListActivity);
     }
 
     public void onClickAdd(View view){
-        //Intent lancementSecondeActivite = new Intent(MainActivity.this , SecondActivity . class );
-        Log.d("Button click", "Clic sur add");
-        Intent lancementSecondeActivite = new Intent(MainActivity.this , VueAnnonce.class );
-        startActivity (lancementSecondeActivite);
+        Intent LauchAddActivity = new Intent(MainActivity.this , VueAnnonce.class );
+        startActivity (LauchAddActivity);
     }
 
 }
