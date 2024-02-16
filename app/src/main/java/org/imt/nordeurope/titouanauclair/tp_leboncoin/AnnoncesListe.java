@@ -5,8 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -29,6 +31,14 @@ public class AnnoncesListe extends AppCompatActivity {
         adapter = new AdAdapter(getApplicationContext(), listedAnnonces);
 
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
+                Intent intent = new Intent(AnnoncesListe.this,DetailsActivity.class);
+                intent.putExtra("MODEL", listedAnnonces.get(i));
+                startActivity(intent);
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

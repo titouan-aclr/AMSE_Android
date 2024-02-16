@@ -3,9 +3,10 @@ package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class AdModel {
+public class AdModel implements Serializable {
     int idAnnonce;
     String nomAnnonce;
     Double prixAnnonce;
