@@ -29,8 +29,7 @@ public class AdAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) { return adModelArrayList.get(i).getIdAnnonce() ; } // Return ad id i
 
-    @Override
-    public android.view.View getView(int i, android.view.View convertView, ViewGroup parent) {
+    public View getView(int i, View convertView, ViewGroup parent) {
 
         AdModel ad = adModelArrayList.get(i);
         convertView = inflater.inflate(R.layout.item_listview_ad, null);
@@ -38,13 +37,12 @@ public class AdAdapter extends BaseAdapter {
         ImageView imageAnnonce_item = convertView.findViewById(R.id.imageAnnonce_item);
         TextView nomAnnonce_item = convertView.findViewById(R.id.nomAnnonce_item);
         TextView prixAnnonce_item = convertView.findViewById(R.id.prixAnnonce_item) ;
-
-        Log.d("compare", Integer.toString(R.drawable.a));
-        Log.d("imageAnnonce", Integer.toString(adModelArrayList.get(i).getImageAnnonce()));
+        TextView anneeAnnonce_item = convertView.findViewById(R.id.anneeAnnonce_item) ;
 
         imageAnnonce_item.setImageResource(adModelArrayList.get(i).getImageAnnonce());
         nomAnnonce_item.setText(adModelArrayList.get(i).getNomAnnonce());
-        prixAnnonce_item.setText(adModelArrayList.get(i).getPrixAnnonce().toString());
+        prixAnnonce_item.setText(adModelArrayList.get(i).getPrixAnnonce().toString() + " €");
+        anneeAnnonce_item.setText(String.valueOf(adModelArrayList.get(i).getAnneeAnnonce()));
         return convertView;
     }
 }

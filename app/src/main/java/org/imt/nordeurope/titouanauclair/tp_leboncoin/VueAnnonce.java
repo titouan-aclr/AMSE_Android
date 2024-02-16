@@ -4,14 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class VueAnnonce extends AppCompatActivity {
 
@@ -39,6 +48,7 @@ public class VueAnnonce extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -67,8 +77,56 @@ public class VueAnnonce extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
+            String imagePath = saveImageToExternalStorage(selectedImageUri);
+            filePath = imagePath;
             imageProduct.setImageURI(selectedImageUri);
         }
     }
+    private String saveImageToExternalStorage(Uri imageUri) {
+        if (imageUri == null) {
+            return null;
+        }
+
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        String imagePath = null;
+        try {
+            Context context = getApplicationContext();
+            if (context == null) {
+                return null;
+            }
+
+            String imageName = "image_" + System.currentTimeMillis() + ".jpg"; // Nom de fichier unique
+            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "VotreDossier");
+            if (!directory.exists()) {
+                directory.mkdirs(); // Créer le dossier s'il n'existe pas
+            }
+            File file = new File(directory, imageName);
+
+            inputStream = context.getContentResolver().openInputStream(imageUri);
+            outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            imagePath = file.getAbsolutePath();
+        } catch (IOException e) {
+            Log.e("FileUtils", "Erreur lors de la sauvegarde de l'image sur le stockage externe", e);
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                Log.e("FileUtils", "Erreur lors de la fermeture des flux", e);
+            }
+        }
+        return imagePath;
+    }
+
 
 }

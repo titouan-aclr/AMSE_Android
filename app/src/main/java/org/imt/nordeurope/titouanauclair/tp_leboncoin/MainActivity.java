@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickList(View view){
-        //Intent lancementSecondeActivite = new Intent(MainActivity.this , SecondActivity . class );
+        Intent lancementSecondeActivite = new Intent(MainActivity.this , AnnoncesListe.class );
         Log.d("Button click", "Clic sur list");
-        //startActivity (lancementSecondeActivite);
+        startActivity (lancementSecondeActivite);
     }
 
     public void onClickAdd(View view){
