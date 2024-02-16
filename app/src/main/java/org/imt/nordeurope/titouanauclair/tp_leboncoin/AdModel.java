@@ -1,17 +1,20 @@
 package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 
+import android.content.Context;
+import android.util.Log;
+
 public class AdModel {
     int idAnnonce;
     String nomAnnonce;
     Double prixAnnonce;
-    String urlImageAnnonce;
+    int ImageAnnonce;
     int anneeAnnonce;
 
-    public AdModel(int idAnnonce, String nomAnnonce, Double prixAnnonce, String urlImageAnnonce, int anneeAnnonce){
+    public AdModel(int idAnnonce, String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce){
         this.idAnnonce = idAnnonce;
         this.nomAnnonce = nomAnnonce;
         this.prixAnnonce = prixAnnonce;
-        this.urlImageAnnonce = urlImageAnnonce;
+        this.ImageAnnonce = ImageAnnonce;
         this.anneeAnnonce = anneeAnnonce;
     }
 
@@ -31,12 +34,12 @@ public class AdModel {
         this.prixAnnonce = prixAnnonce;
     }
 
-    public String getUrlImageAnnonce() {
-        return urlImageAnnonce;
+    public int getImageAnnonce() {
+        return ImageAnnonce;
     }
 
-    public void setUrlImageAnnonce(String urlImageAnnonce) {
-        this.urlImageAnnonce = urlImageAnnonce;
+    public void setImageAnnonce(int ImageAnnonce) {
+        this.ImageAnnonce = ImageAnnonce;
     }
 
     public int getAnneeAnnonce() {

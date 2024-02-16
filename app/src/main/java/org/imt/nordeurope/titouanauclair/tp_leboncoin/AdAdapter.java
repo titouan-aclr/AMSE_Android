@@ -1,14 +1,16 @@
 package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class AdAdapter {
+public class AdAdapter extends BaseAdapter {
     private final Context context;
     private final ArrayList<AdModel> adModelArrayList;
     private final LayoutInflater inflater;
@@ -26,21 +28,23 @@ public class AdAdapter {
     public Object getItem(int i) { return getItemId(i)  ; } // Return ad number i
     @Override
     public long getItemId(int i) { return adModelArrayList.get(i).getIdAnnonce() ; } // Return ad id i
+
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        // Get ad number i
+    public android.view.View getView(int i, android.view.View convertView, ViewGroup parent) {
+
         AdModel ad = adModelArrayList.get(i);
-        view = inflater.inflate(R.layout.votre_design_layout, null);
+        convertView = inflater.inflate(R.layout.item_listview_ad, null);
 // Get the image view and both text views
-        ImageView imageAnnonce_item = (ImageView)findViewById(R.id.imageAnnonce_item);
-        TextView nomAnnonce_item = (TextView)findViewById(R.id.nomAnnonce_item);
-        TextView prixAnnonce_item = (TextView)findViewById(R.id.prixAnnonce_item) ;
-        imageAnnonce_item.setImageResource(adModelArrayList.get(i).getUrlImageAnnonce());
+        ImageView imageAnnonce_item = convertView.findViewById(R.id.imageAnnonce_item);
+        TextView nomAnnonce_item = convertView.findViewById(R.id.nomAnnonce_item);
+        TextView prixAnnonce_item = convertView.findViewById(R.id.prixAnnonce_item) ;
+
+        Log.d("compare", Integer.toString(R.drawable.a));
+        Log.d("imageAnnonce", Integer.toString(adModelArrayList.get(i).getImageAnnonce()));
+
+        imageAnnonce_item.setImageResource(adModelArrayList.get(i).getImageAnnonce());
         nomAnnonce_item.setText(adModelArrayList.get(i).getNomAnnonce());
         prixAnnonce_item.setText(adModelArrayList.get(i).getPrixAnnonce().toString());
-        return view;
+        return convertView;
     }
-
-
-
 }

@@ -4,27 +4,38 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.os.Bundle;
+import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class AnnoncesListe extends AppCompatActivity {
+
+    public ArrayList<AdModel> listedAnnonces = new ArrayList<>();
+    ListView listView;
+    private static AdAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annonces_liste);
-    }
-    
+        listView = findViewById(R.id.listeVehicules);
 
-    public List<AdModel> listedAnnonces = new ArrayList<>();
+        createList();
+
+        adapter = new AdAdapter(getApplicationContext(), listedAnnonces);
+
+        listView.setAdapter(adapter);
+    }
     
     void createList(){
-        listedAnnonces.add(new AdModel(1, "drawable/1.-CITROEN-SM.jpg", 123.0, "XXX", 1987));
-        listedAnnonces.add(new AdModel(2, "drawable/10.-CITROEN-CX.jpg", 123.0, "XXX", 1966));
-        listedAnnonces.add(new AdModel(3, "drawable/11.-LAMBO-COUNTACH.jpg", 123.0, "XXX", 1978));
+        listedAnnonces.add(new AdModel(1, "Citroen", 18500.0, R.drawable.a, 1978));
+        listedAnnonces.add(new AdModel(2, "Peugeot", 18500.0, R.drawable.a, 1978));
+        listedAnnonces.add(new AdModel(3, "Renault", 18500.0, R.drawable.a, 1978));
+
     }
+
+
     
 
 
