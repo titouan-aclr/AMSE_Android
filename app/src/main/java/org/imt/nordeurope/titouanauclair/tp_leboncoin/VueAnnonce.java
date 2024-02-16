@@ -1,5 +1,7 @@
 package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -11,6 +13,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,6 +28,7 @@ public class VueAnnonce extends AppCompatActivity {
     public TextView price;
     public TextView address;
     private Button sendButton;
+    private String filePath;
     private static final int PICK_IMAGE_REQUEST = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +48,21 @@ public class VueAnnonce extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendAdd(imageProduct,address,price);
             }
         });
-    }
-    private void sendAdd(ImageView imageProduct, TextView address, TextView price){
 
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
     private void pickImageFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,
