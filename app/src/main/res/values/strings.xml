@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TP_LeBonCoin</string>
+    <string name="logo_description">Logo de l\'application</string>
+    <string name="list_button">Lister</string>
+    <string name="add_button">Ajouter</string>
 </resources>

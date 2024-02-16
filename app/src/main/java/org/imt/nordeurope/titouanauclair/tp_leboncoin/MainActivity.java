@@ -5,6 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.util.Log;
+import android.view.View;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +20,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onClick(View view) {
+    public void onClickList(View view){
+        //Intent lancementSecondeActivite = new Intent(MainActivity.this , SecondActivity . class );
+        Log.d("Button click", "Clic sur list");
+        //startActivity (lancementSecondeActivite);
+    }
+
+    public void onClickAdd(View view){
+        //Intent lancementSecondeActivite = new Intent(MainActivity.this , SecondActivity . class );
+        Log.d("Button click", "Clic sur add");
         Intent lancementSecondeActivite = new Intent(MainActivity.this , VueAnnonce.class );
         startActivity (lancementSecondeActivite);
     }
