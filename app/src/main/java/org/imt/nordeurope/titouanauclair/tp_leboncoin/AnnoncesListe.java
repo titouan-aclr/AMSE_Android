@@ -5,10 +5,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -23,17 +25,27 @@ public class AnnoncesListe extends AppCompatActivity {
     public ArrayList<AdModel> listedAnnoncesFiltrees = new ArrayList<>();
     private static AdAdapter adapter;
     private SeekBar SeekBarAnnee;
-    int annee_max;
+    int annee_max =2024;
     TextView annee_max_visualisation;
+    private EditText barre_de_recherche;
+    String contenuBarreDeRecherche="";
 
 
 
+    @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annonces_liste);
         listView = findViewById(R.id.listeVehicules);
+
         createList();
+
+        filtrageListes();
+
+        adapter = new AdAdapter(getApplicationContext(), listedAnnoncesFiltrees);
+
+        listView.setAdapter(adapter);
         this.annee_max_visualisation = (TextView) findViewById(R.id.valueBar);
         this.SeekBarAnnee = (SeekBar) findViewById(R.id.seekBarAnnee);
         this.SeekBarAnnee.setMax(findMaxYear(listedAnnonces));
@@ -42,12 +54,16 @@ public class AnnoncesListe extends AppCompatActivity {
         }
 
         this.SeekBarAnnee.setProgress(findMaxYear(listedAnnonces));
+        this.annee_max_visualisation.setText("Année maximum de recherche : " + Integer.toString(findMaxYear(listedAnnonces)));
+
+        contenuBarreDeRecherche = String.valueOf((EditText) findViewById(R.id.barreDeRecherche));
+
 
         SeekBarAnnee.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 annee_max = progress;
-                annee_max_visualisation.setText(String.valueOf(annee_max));
+                annee_max_visualisation.setText("Année maximum de recherche : " + String.valueOf(annee_max));
                 listedAnnoncesFiltrees.clear();
                 filtrageListes(); //
                 adapter.notifyDataSetChanged();
@@ -63,11 +79,7 @@ public class AnnoncesListe extends AppCompatActivity {
         });
 
 
-        filtrageListes();
 
-        adapter = new AdAdapter(getApplicationContext(), listedAnnoncesFiltrees);
-
-        listView.setAdapter(adapter);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -116,8 +128,30 @@ public class AnnoncesListe extends AppCompatActivity {
         listedAnnonces.add(new AdModel("Porsche 928", 69900.0, R.drawable.porsche_928, 1977));
     }
 
+/*
+    void filtrageListes(){
+        listedAnnoncesFiltrees.clear();
+        for(int i = 0; i< listedAnnonces.size(); i++){
+
+            if(!contenuBarreDeRecherche.equals("") && !contenuBarreDeRecherche.equals("Ma recherche")){
+                if (listedAnnonces.get(i).getNomAnnonce().contains(contenuBarreDeRecherche)){
+                    if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max){
+                        listedAnnoncesFiltrees.add(listedAnnonces.get(i));
+                    }
+                }
+            }
+            else
+            {
+                if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max){
+                    listedAnnoncesFiltrees.add(listedAnnonces.get(i));
+                }
+            }
+        }
+    }*/
+
 
     void filtrageListes(){
+        listedAnnoncesFiltrees.clear();
         for(int i = 0; i< listedAnnonces.size(); i++){
             if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max){
                 listedAnnoncesFiltrees.add(listedAnnonces.get(i));
