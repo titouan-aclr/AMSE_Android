@@ -5,9 +5,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -16,22 +20,58 @@ public class AnnoncesListe extends AppCompatActivity {
 
     public ArrayList<AdModel> listedAnnonces = new ArrayList<>();
     ListView listView;
+    public ArrayList<AdModel> listedAnnoncesFiltrees = new ArrayList<>();
     private static AdAdapter adapter;
+    private SeekBar SeekBarAnnee;
+    int annee_max;
+    TextView annee_max_visualisation;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annonces_liste);
         listView = findViewById(R.id.listeVehicules);
-
         createList();
+        this.annee_max_visualisation = (TextView) findViewById(R.id.valueBar);
+        this.SeekBarAnnee = (SeekBar) findViewById(R.id.seekBarAnnee);
+        this.SeekBarAnnee.setMax(findMaxYear(listedAnnonces));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            this.SeekBarAnnee.setMin(findMinYear(listedAnnonces));
+        }
 
-        adapter = new AdAdapter(getApplicationContext(), listedAnnonces);
+        this.SeekBarAnnee.setProgress(findMaxYear(listedAnnonces));
+
+        SeekBarAnnee.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                annee_max = progress;
+                annee_max_visualisation.setText(String.valueOf(annee_max));
+                listedAnnoncesFiltrees.clear();
+                filtrageListes(); //
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+
+        filtrageListes();
+
+        adapter = new AdAdapter(getApplicationContext(), listedAnnoncesFiltrees);
 
         listView.setAdapter(adapter);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
@@ -43,6 +83,11 @@ public class AnnoncesListe extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
     
     void createList(){
         listedAnnonces.add(new AdModel("Citroën SM", 49800.0, R.drawable.citroen_sm, 1970));
@@ -72,8 +117,35 @@ public class AnnoncesListe extends AppCompatActivity {
     }
 
 
-    
+    void filtrageListes(){
+        for(int i = 0; i< listedAnnonces.size(); i++){
+            if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max){
+                listedAnnoncesFiltrees.add(listedAnnonces.get(i));
+            }
+        }
+    }
+
+    int findMinYear(ArrayList<AdModel> liste){
+        int annee_min_trouvee = 2024;
+        for(int i=0; i<liste.size(); i++){
+            if(liste.get(i).getAnneeAnnonce()<annee_min_trouvee){
+                    annee_min_trouvee = liste.get(i).getAnneeAnnonce();
+            }
+        }
+        return annee_min_trouvee;
+    }
+    int findMaxYear(ArrayList<AdModel> liste){
+        int annee_max_trouvee = 0;
+        for(int i=0; i<liste.size(); i++){
+            if(liste.get(i).getAnneeAnnonce()>annee_max_trouvee){
+                annee_max_trouvee = liste.get(i).getAnneeAnnonce();
+            }
+        }
+        return annee_max_trouvee;
+    }
 
 
 }
+
+
 

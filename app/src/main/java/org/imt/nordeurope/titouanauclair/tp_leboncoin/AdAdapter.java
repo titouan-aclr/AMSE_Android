@@ -16,6 +16,7 @@ public class AdAdapter extends BaseAdapter {
     private final ArrayList<AdModel> adModelArrayList;
     private final LayoutInflater inflater;
 
+
     //Constructor
     public AdAdapter(Context context, ArrayList<AdModel> adModelArrayList) {
         this.context = context;
