@@ -13,14 +13,17 @@ public class AdModel implements Serializable {
     private int ImageAnnonce;
     private int anneeAnnonce;
     private String description;
+    private String phoneNumber;
 
-    public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce, String description){
+    public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce, String phoneNumber, String description){
+        Log.d("image", String.valueOf(ImageAnnonce));
         this.idAnnonce = generateId();
         this.nomAnnonce = nomAnnonce;
         this.prixAnnonce = prixAnnonce;
         this.ImageAnnonce = ImageAnnonce;
         this.anneeAnnonce = anneeAnnonce;
         this.description = description;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getNomAnnonce() {
@@ -69,6 +72,14 @@ public class AdModel implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     private int generateId() {

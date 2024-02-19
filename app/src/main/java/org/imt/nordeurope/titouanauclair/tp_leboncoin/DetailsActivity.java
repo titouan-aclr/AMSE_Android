@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.text.LineBreaker;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +18,14 @@ import org.w3c.dom.Text;
 
 public class DetailsActivity extends AppCompatActivity {
 
+    private AdModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        model = (AdModel) getIntent().getSerializableExtra("MODEL");
 
         initData();
 
@@ -29,8 +34,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        AdModel model = (AdModel) getIntent().getSerializableExtra("MODEL");
-
         ImageView image = findViewById(R.id.imageAnnonce_details);
         TextView titre = findViewById(R.id.nomAnnonce_details);
         TextView annee = findViewById(R.id.anneeAnnonce_details);
@@ -55,5 +58,13 @@ public class DetailsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickPhone(android.view.View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + model.getPhoneNumber()));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
