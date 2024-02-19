@@ -67,4 +67,12 @@ public class DetailsActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    public void onClickEmailClick(android.view.View view) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"+model.getEmail()));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " : "+model.getNomAnnonce());
+        intent.putExtra(Intent.EXTRA_TEXT, "Bonjour,\n\n je vous contacte par rapport à votre annonce " + model.getNomAnnonce() + " sur l'application "+ getString(R.string.app_name) + ". \nEst-elle toujours disponible ?\n\n Merci d'avance.");
+        startActivity(intent);
+    }
 }
