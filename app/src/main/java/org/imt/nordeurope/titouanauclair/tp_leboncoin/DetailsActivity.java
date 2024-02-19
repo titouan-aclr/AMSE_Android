@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,8 @@ public class DetailsActivity extends AppCompatActivity {
         TextView annee = findViewById(R.id.anneeAnnonce_details);
         TextView prix = findViewById(R.id.prixAnnonce_details);
         TextView description = findViewById(R.id.descAnnonce_details);
+        Button phoneButton = findViewById(R.id.phoneButton);
+        Button emailButton = findViewById(R.id.emailButton);
 
         image.setImageResource(model.getImageAnnonce());
         titre.setText(model.getNomAnnonce());
@@ -48,6 +51,9 @@ public class DetailsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             description.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
         }
+
+        if(model.getPhoneNumber() == null) phoneButton.setEnabled(false);
+        if(model.getEmail() == null) emailButton.setEnabled(false);
     }
 
     @Override

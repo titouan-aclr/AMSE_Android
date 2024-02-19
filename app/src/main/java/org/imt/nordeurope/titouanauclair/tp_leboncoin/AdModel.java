@@ -28,6 +28,10 @@ public class AdModel implements Serializable {
         this.email = email;
     }
 
+    public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce, String description) {
+        this(nomAnnonce, prixAnnonce, ImageAnnonce, anneeAnnonce, null, null, description);
+    }
+
     public String getNomAnnonce() {
         return nomAnnonce;
     }

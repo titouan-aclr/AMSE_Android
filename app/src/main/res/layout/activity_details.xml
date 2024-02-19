@@ -64,28 +64,28 @@
         app:layout_constraintTop_toBottomOf="@+id/anneeAnnonce_details" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/phoneButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:drawableLeft="@drawable/baseline_phone_24"
         android:onClick="onClickPhone"
         android:text="Appeler"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/emailButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descAnnonce_details" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/emailButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickEmailClick"
         android:text="Email"
         android:drawableLeft="@drawable/baseline_email_24"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/phoneButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
