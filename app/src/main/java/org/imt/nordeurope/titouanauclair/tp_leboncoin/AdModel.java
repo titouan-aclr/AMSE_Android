@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Random;
 
 public class AdModel implements Serializable {
@@ -41,6 +43,10 @@ public class AdModel implements Serializable {
 
     public Double getPrixAnnonce() {
         return prixAnnonce;
+    }
+
+    public String getPrixAnnonceString() {
+        return String.format("%,.0f", prixAnnonce) + "€";
     }
 
     public void setPrixAnnonce(Double prixAnnonce) {

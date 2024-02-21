@@ -47,7 +47,7 @@ public class RecyclerViewAdAdapter extends
         // This method is called for each of the visible rows displayed in our RecyclerView. It is usually here that we update their appearance.
         AdModel ad = data.get(position);
         holder.nomAnnonce.setText(ad.getNomAnnonce());
-        holder.prixAnnonce.setText(ad.getPrixAnnonce().toString());
+        holder.prixAnnonce.setText(ad.getPrixAnnonceString());
         holder.imageView.setImageResource(ad.getImageAnnonce());
         holder.anneeAnnonce.setText(String.valueOf(ad.getAnneeAnnonce()));
     }

@@ -46,7 +46,7 @@ public class DetailsActivity extends AppCompatActivity {
         image.setImageResource(model.getImageAnnonce());
         titre.setText(model.getNomAnnonce());
         annee.setText("Année : " + model.getAnneeAnnonce());
-        prix.setText(model.getPrixAnnonce().toString()+ " €");
+        prix.setText(model.getPrixAnnonceString());
         description.setText(model.getDescription());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             description.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
