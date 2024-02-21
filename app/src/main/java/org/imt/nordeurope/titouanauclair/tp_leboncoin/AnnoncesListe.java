@@ -44,14 +44,15 @@ public class AnnoncesListe extends AppCompatActivity {
 
         adAdapter = new RecyclerViewAdAdapter(listedAnnonces);
         recyclerView.setAdapter(adAdapter);
-        /*recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+        adAdapter.setOnItemClickListener(new AdAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
+            public void onItemClick(int position) {
                 Intent intent = new Intent(AnnoncesListe.this,DetailsActivity.class);
-                intent.putExtra("MODEL", listedAnnonces.get(i));
+                intent.putExtra("MODEL", listedAnnonces.get(position));
                 startActivity(intent);
             }
-        });*/
+        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

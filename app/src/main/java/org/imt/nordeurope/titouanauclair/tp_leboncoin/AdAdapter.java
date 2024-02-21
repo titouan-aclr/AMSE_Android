@@ -46,4 +46,8 @@ public class AdAdapter extends BaseAdapter {
         anneeAnnonce_item.setText(String.valueOf(adModelArrayList.get(i).getAnneeAnnonce()));
         return convertView;
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 }

@@ -1,6 +1,8 @@
 package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ public class RecyclerViewAdAdapter extends
         RecyclerView.Adapter<RecyclerViewAdAdapter.RecyclerViewHolder>{
     private ArrayList<AdModel> data;
     private boolean isListView = true;
+    private static AdAdapter.OnItemClickListener listener;
 
     public RecyclerViewAdAdapter(ArrayList<AdModel> data) {
         this.data = data;
@@ -21,6 +24,9 @@ public class RecyclerViewAdAdapter extends
 
     public void setIsListView(boolean isListView) {
         this.isListView = isListView;
+    }
+    public void setOnItemClickListener(AdAdapter.OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -47,12 +53,12 @@ public class RecyclerViewAdAdapter extends
     }
     @Override
     public int getItemCount() {return data.size();}
-    public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
+    public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final ImageView imageView;
         public final TextView nomAnnonce;
         public final TextView prixAnnonce;
         public final TextView anneeAnnonce;
-        public RecyclerViewHolder(@NonNull android.view.View itemView, boolean isListView) {
+        public RecyclerViewHolder(@NonNull android.view.View itemView, boolean isListView){
             super(itemView);
             if(isListView) {
                 imageView = itemView.findViewById(R.id.imageAnnonce_item);
@@ -64,6 +70,17 @@ public class RecyclerViewAdAdapter extends
                 nomAnnonce = itemView.findViewById(R.id.nomAnnonce_recycle);
                 prixAnnonce = itemView.findViewById(R.id.prixAnnonce_recycle);
                 anneeAnnonce = itemView.findViewById(R.id.anneeAnnonce_recycle);
+            }
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(position);
+                }
             }
         }
     }
