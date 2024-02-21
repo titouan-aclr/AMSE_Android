@@ -36,7 +36,7 @@ public class VueAnnonce extends AppCompatActivity {
         setContentView(R.layout.activity_vue_annonce);
         imageProduct  = (ImageView) findViewById(R.id.imageProduct);
         price = (TextView) findViewById(R.id.price);
-        nom = (TextView) findViewById(R.id.description);
+        nom = (TextView) findViewById(R.id.annee);
         sendButton = (Button) findViewById(R.id.sendButton);
 
         imageProduct.setOnClickListener(new View.OnClickListener() {

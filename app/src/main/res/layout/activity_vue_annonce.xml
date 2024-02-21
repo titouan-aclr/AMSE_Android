@@ -62,41 +62,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="161dp"
-        android:layout_marginTop="41dp"
         android:layout_marginEnd="156dp"
         android:text="Publier"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        tools:layout_editor_absoluteY="667dp" />
 
     <EditText
         android:id="@+id/price"
         android:layout_width="249dp"
         android:layout_height="51dp"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="98dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Prix"
+        android:inputType="text"
         android:textColorHint="#A9A9A9"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageProduct" />
 
     <EditText
-        android:id="@+id/description"
-        android:layout_width="346dp"
-        android:layout_height="125dp"
+        android:id="@+id/annee"
+        android:layout_width="242dp"
+        android:layout_height="43dp"
         android:layout_marginStart="101dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="101dp"
-        android:ems="10"
+        android:hint="Annee"
         android:inputType="text"
-        android:hint="Descrivez votre produit"
         android:textColorHint="#A9A9A9"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price" />
 
@@ -112,6 +112,37 @@
         app:layout_constraintTop_toBottomOf="@+id/appbar"
         app:srcCompat="@drawable/baseline_image_24" />
 
+    <EditText
+        android:id="@+id/marque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="98dp"
+        android:ems="10"
+        android:hint="Marque"
+        android:inputType="text"
+        android:textColorHint="#A9A9A9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="328dp"
+        android:layout_height="142dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="42dp"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="text"
+        android:textColorHint="#A9A9A9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/annee" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

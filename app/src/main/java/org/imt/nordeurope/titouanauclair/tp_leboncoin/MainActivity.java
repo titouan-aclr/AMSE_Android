@@ -13,11 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DBManager dbManager = DBManager.getDBManager(getApplicationContext());
-        dbManager.open();
-        dbManager.resetDatabase();
-        dbManager.init();
-        dbManager.close();
     }
 
     public void onClickList(View view){
