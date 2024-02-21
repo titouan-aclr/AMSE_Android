@@ -7,18 +7,29 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class AdModel implements Serializable {
-    int idAnnonce;
-    String nomAnnonce;
-    Double prixAnnonce;
-    int ImageAnnonce;
-    int anneeAnnonce;
+    public int idAnnonce;
+    private String nomAnnonce;
+    private Double prixAnnonce;
+    private String ImageAnnonce;
+    private int anneeAnnonce;
+    private String description;
+    private String phoneNumber;
+    private String email;
 
-    public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce){
+    public AdModel(String nomAnnonce, Double prixAnnonce, String ImageAnnonce, int anneeAnnonce, String phoneNumber, String email, String description){
+        Log.d("image", String.valueOf(ImageAnnonce));
         this.idAnnonce = generateId();
         this.nomAnnonce = nomAnnonce;
         this.prixAnnonce = prixAnnonce;
         this.ImageAnnonce = ImageAnnonce;
         this.anneeAnnonce = anneeAnnonce;
+        this.description = description;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public AdModel(String nomAnnonce, Double prixAnnonce, String ImageAnnonce, int anneeAnnonce, String description) {
+        this(nomAnnonce, prixAnnonce, ImageAnnonce, anneeAnnonce, null, null, description);
     }
 
     public String getNomAnnonce() {
@@ -37,11 +48,11 @@ public class AdModel implements Serializable {
         this.prixAnnonce = prixAnnonce;
     }
 
-    public int getImageAnnonce() {
+    public String getImageAnnonce() {
         return ImageAnnonce;
     }
 
-    public void setImageAnnonce(int ImageAnnonce) {
+    public void setImageAnnonce(String ImageAnnonce) {
         this.ImageAnnonce = ImageAnnonce;
     }
 
@@ -59,6 +70,30 @@ public class AdModel implements Serializable {
 
     public void setIdAnnonce(int idAnnonce) {
         this.idAnnonce = idAnnonce;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     private int generateId() {

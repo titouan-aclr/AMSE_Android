@@ -16,6 +16,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PRICE = "price";
     public static final String IMAGE = "image";
     public static final String ANNEE = "annee";
+    public static final String PHONE = "phone";
+    public static final String MAIL = "mail";
+    public static final String DESCRIPTION = "description";
 
     // Database Information
     static final String DB_NAME = "LEBONCOIN.DB";
@@ -29,7 +32,10 @@ public class DBHelper extends SQLiteOpenHelper {
             + TITLE + " TEXT NOT NULL, "
             + PRICE + " TEXT, "
             + IMAGE + " TEXT, "
-            + ANNEE + " TEXT);";
+            + ANNEE + " TEXT, "
+            + PHONE + " TEXT, "
+            + MAIL + " TEXT, "
+            + DESCRIPTION + " TEXT);";
 
 
     public DBHelper(Context context) {

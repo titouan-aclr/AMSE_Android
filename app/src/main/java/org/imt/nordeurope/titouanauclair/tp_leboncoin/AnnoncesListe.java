@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 
@@ -36,6 +37,15 @@ public class AnnoncesListe extends AppCompatActivity {
         listView.setAdapter(adapter);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
+                Intent intent = new Intent(AnnoncesListe.this,DetailsActivity.class);
+                intent.putExtra("MODEL", listedAnnonces.get(i));
+                startActivity(intent);
+            }
+        });
     }
     @Override
     protected void onDestroy() {
@@ -49,9 +59,12 @@ public class AnnoncesListe extends AppCompatActivity {
                 //int id = cursor.getInt(cursor.getColumnIndex(DBHelper._ID));
                 String title = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE));
                 double price = cursor.getDouble(cursor.getColumnIndex(DBHelper.PRICE));
-                int image = cursor.getInt(cursor.getColumnIndex(DBHelper.IMAGE));
+                String image = cursor.getString(cursor.getColumnIndex(DBHelper.IMAGE));
                 int year = cursor.getInt(cursor.getColumnIndex(DBHelper.ANNEE));
-                AdModel adModel = new AdModel(title, price, image, year);
+                String phone = cursor.getString(cursor.getColumnIndex(DBHelper.PHONE));
+                String mail = cursor.getString(cursor.getColumnIndex(DBHelper.MAIL));
+                String description = cursor.getString(cursor.getColumnIndex(DBHelper.DESCRIPTION));
+                AdModel adModel = new AdModel(title, price, image, year, phone, mail, description);
                 listedAnnonces.add(adModel);
             } while (cursor.moveToNext());
             cursor.close();
@@ -66,7 +79,5 @@ public class AnnoncesListe extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 

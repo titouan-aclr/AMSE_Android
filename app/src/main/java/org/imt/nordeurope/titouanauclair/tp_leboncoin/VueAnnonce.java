@@ -104,10 +104,10 @@ public class VueAnnonce extends AppCompatActivity {
                 return null;
             }
 
-            String imageName = "image_" + System.currentTimeMillis() + ".jpg";
+            String imageName = "image_" + System.currentTimeMillis() + ".jpg"; // Nom de fichier unique
             File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "VotreDossier");
             if (!directory.exists()) {
-                directory.mkdirs();
+                directory.mkdirs(); // Créer le dossier s'il n'existe pas
             }
             File file = new File(directory, imageName);
 
