@@ -12,8 +12,10 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
@@ -21,12 +23,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 public class VueAnnonce extends AppCompatActivity {
 
     public ImageView imageProduct;
     public TextView price;
     public TextView nom;
+    public Spinner annee;
+    public TextView description;
     private Button sendButton;
     private String filePath;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -36,8 +44,22 @@ public class VueAnnonce extends AppCompatActivity {
         setContentView(R.layout.activity_vue_annonce);
         imageProduct  = (ImageView) findViewById(R.id.imageProduct);
         price = (TextView) findViewById(R.id.price);
-        nom = (TextView) findViewById(R.id.annee);
+        nom = (TextView) findViewById(R.id.marque);
+        annee = (Spinner) findViewById(R.id.annee);
+        description = (TextView) findViewById(R.id.description);
         sendButton = (Button) findViewById(R.id.sendButton);
+
+        List<String> yearsList = new ArrayList<>();
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int year = 1950; year <= currentYear; year++) {
+            yearsList.add(String.valueOf(year));
+        }
+        Collections.reverse(yearsList);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, yearsList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        annee.setAdapter(adapter);
 
         imageProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +70,7 @@ public class VueAnnonce extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdModel nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), R.drawable.alfasud, 2024);
+                AdModel nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()),"0645323232","abcd@gmail.com",description.getText().toString());
 
                 DBManager dbManager = DBManager.getDBManager(getApplicationContext());
 
@@ -57,6 +79,9 @@ public class VueAnnonce extends AppCompatActivity {
                 dbManager.insert(nouvelleAnnonce);
 
                 dbManager.close();
+
+                Intent intent = new Intent(VueAnnonce.this,AnnoncesListe.class);
+                startActivity(intent);
             }
         });
 
@@ -85,12 +110,11 @@ public class VueAnnonce extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
-            String imagePath = saveImageToExternalStorage(selectedImageUri);
-            filePath = imagePath;
+            filePath = saveImageToCache(selectedImageUri);
             imageProduct.setImageURI(selectedImageUri);
         }
     }
-    private String saveImageToExternalStorage(Uri imageUri) {
+    private String saveImageToCache(Uri imageUri) {
         if (imageUri == null) {
             return null;
         }
@@ -104,24 +128,24 @@ public class VueAnnonce extends AppCompatActivity {
                 return null;
             }
 
-            String imageName = "image_" + System.currentTimeMillis() + ".jpg"; // Nom de fichier unique
-            File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "VotreDossier");
-            if (!directory.exists()) {
-                directory.mkdirs(); // Créer le dossier s'il n'existe pas
-            }
-            File file = new File(directory, imageName);
+            // Créez un fichier temporaire dans le répertoire de cache de l'application
+            File cacheDir = context.getCacheDir();
+            String imageName = "image_" + System.currentTimeMillis() + ".jpg";
+            File imageFile = new File(cacheDir, imageName);
 
+            // Copiez l'image depuis son emplacement actuel vers le fichier temporaire
             inputStream = context.getContentResolver().openInputStream(imageUri);
-            outputStream = new FileOutputStream(file);
+            outputStream = new FileOutputStream(imageFile);
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {
                 outputStream.write(buffer, 0, length);
             }
-            imagePath = file.getAbsolutePath();
+            imagePath = imageFile.getAbsolutePath();
         } catch (IOException e) {
-            Log.e("FileUtils", "Erreur lors de la sauvegarde de l'image sur le stockage externe", e);
+            Log.e("VueAnnonce", "Erreur lors de l'enregistrement de l'image dans le cache.", e);
         } finally {
+            // Fermez les flux
             try {
                 if (inputStream != null) {
                     inputStream.close();
@@ -130,11 +154,10 @@ public class VueAnnonce extends AppCompatActivity {
                     outputStream.close();
                 }
             } catch (IOException e) {
-                Log.e("FileUtils", "Erreur lors de la fermeture des flux", e);
+                Log.e("VueAnnonce", "Erreur lors de la fermeture des flux.", e);
             }
         }
         return imagePath;
     }
-
 
 }
