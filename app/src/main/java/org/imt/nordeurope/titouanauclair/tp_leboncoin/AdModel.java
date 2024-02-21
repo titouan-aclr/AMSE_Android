@@ -17,7 +17,6 @@ public class AdModel implements Serializable {
     private String email;
 
     public AdModel(String nomAnnonce, Double prixAnnonce, int ImageAnnonce, int anneeAnnonce, String phoneNumber, String email, String description){
-        Log.d("image", String.valueOf(ImageAnnonce));
         this.idAnnonce = generateId();
         this.nomAnnonce = nomAnnonce;
         this.prixAnnonce = prixAnnonce;

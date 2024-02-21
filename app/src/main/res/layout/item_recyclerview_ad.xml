@@ -3,49 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="310dp">
 
     <TextView
-        android:id="@+id/nomAnnonce_item"
+        android:id="@+id/nomAnnonce_recycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="Nom de la publication"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageAnnonce_recycle" />
 
     <TextView
-        android:id="@+id/prixAnnonce_item"
+        android:id="@+id/prixAnnonce_recycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="10dp"
         android:text="Prix du véhicule"
-        app:layout_constraintStart_toStartOf="@+id/nomAnnonce_item"
-        app:layout_constraintTop_toBottomOf="@+id/nomAnnonce_item" />
+        app:layout_constraintStart_toStartOf="@+id/nomAnnonce_recycle"
+        app:layout_constraintTop_toBottomOf="@+id/nomAnnonce_recycle" />
 
     <ImageView
-        android:id="@+id/imageAnnonce_item"
-        android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="5dp"
+        android:id="@+id/imageAnnonce_recycle"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="2dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_delete" />
 
     <TextView
-        android:id="@+id/anneeAnnonce_item"
+        android:id="@+id/anneeAnnonce_recycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingBottom="10dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/prixAnnonce_item"
-        app:layout_constraintTop_toBottomOf="@+id/prixAnnonce_item" />
+        android:text="Année"
+        app:layout_constraintStart_toStartOf="@+id/prixAnnonce_recycle"
+        app:layout_constraintTop_toBottomOf="@+id/prixAnnonce_recycle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

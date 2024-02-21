@@ -3,10 +3,15 @@ package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,28 +22,36 @@ import java.util.ArrayList;
 public class AnnoncesListe extends AppCompatActivity {
 
     public ArrayList<AdModel> listedAnnonces = new ArrayList<>();
-    ListView listView;
-    private static AdAdapter adapter;
+    RecyclerView recyclerView;
+    private static RecyclerViewAdAdapter adAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
+    private Menu menu;
+    private boolean isListView = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annonces_liste);
-        listView = findViewById(R.id.listeVehicules);
+
+        recyclerView = findViewById(R.id.recyclerView);
 
         createList();
 
-        adapter = new AdAdapter(getApplicationContext(), listedAnnonces);
+        linearLayoutManager = new LinearLayoutManager(this);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        adAdapter = new RecyclerViewAdAdapter(listedAnnonces);
+        recyclerView.setAdapter(adAdapter);
+        /*recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
                 Intent intent = new Intent(AnnoncesListe.this,DetailsActivity.class);
                 intent.putExtra("MODEL", listedAnnonces.get(i));
                 startActivity(intent);
             }
-        });
+        });*/
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -50,8 +63,34 @@ public class AnnoncesListe extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.actionChangeDisplayMode:
+                changeDisplayMode();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeDisplayMode() {
+        if(isListView){
+            adAdapter.setIsListView(false);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.setAdapter(adAdapter);
+            isListView = false;
+            menu.getItem(0).setIcon(R.drawable.baseline_view_list_24);
+        } else {
+            adAdapter.setIsListView(true);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(adAdapter);
+            isListView = true;
+            menu.getItem(0).setIcon(R.drawable.baseline_grid_view_24);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.list_menu, menu);
+        return true;
     }
     
     void createList(){

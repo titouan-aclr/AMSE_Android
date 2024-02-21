@@ -1,7 +1,6 @@
 package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +35,12 @@ public class AdAdapter extends BaseAdapter {
         AdModel ad = adModelArrayList.get(i);
         convertView = inflater.inflate(R.layout.item_listview_ad, null);
 // Get the image view and both text views
-        ImageView imageAnnonce_item = convertView.findViewById(R.id.imageAnnonce_item);
-        TextView nomAnnonce_item = convertView.findViewById(R.id.nomAnnonce_item);
-        TextView prixAnnonce_item = convertView.findViewById(R.id.prixAnnonce_item) ;
-        TextView anneeAnnonce_item = convertView.findViewById(R.id.anneeAnnonce_item) ;
+        //ImageView imageAnnonce_item = convertView.findViewById(R.id.imageAnnonce_recycle);
+        TextView nomAnnonce_item = convertView.findViewById(R.id.nomAnnonce_recycle);
+        TextView prixAnnonce_item = convertView.findViewById(R.id.prixAnnonce_recycle) ;
+        TextView anneeAnnonce_item = convertView.findViewById(R.id.anneeAnnonce_recycle) ;
 
-        imageAnnonce_item.setImageResource(adModelArrayList.get(i).getImageAnnonce());
+        //imageAnnonce_item.setImageResource(adModelArrayList.get(i).getImageAnnonce());
         nomAnnonce_item.setText(adModelArrayList.get(i).getNomAnnonce());
         prixAnnonce_item.setText(adModelArrayList.get(i).getPrixAnnonce().toString() + " €");
         anneeAnnonce_item.setText(String.valueOf(adModelArrayList.get(i).getAnneeAnnonce()));
