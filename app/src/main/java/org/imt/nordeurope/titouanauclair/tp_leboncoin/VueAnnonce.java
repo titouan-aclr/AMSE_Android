@@ -48,7 +48,7 @@ public class VueAnnonce extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdModel nouvelleAnnonce = new AdModel(50, nom.getText().toString(), Double.parseDouble(price.getText().toString()), R.drawable.a, 2024);
+                AdModel nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), R.drawable.alfasud, 2024);
 
                 DBManager dbManager = DBManager.getDBManager(getApplicationContext());
 

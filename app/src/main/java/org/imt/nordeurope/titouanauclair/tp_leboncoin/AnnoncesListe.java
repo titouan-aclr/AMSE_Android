@@ -34,7 +34,6 @@ public class AnnoncesListe extends AppCompatActivity {
         adapter = new AdAdapter(getApplicationContext(), listedAnnonces);
 
         listView.setAdapter(adapter);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -47,12 +46,12 @@ public class AnnoncesListe extends AppCompatActivity {
         Cursor cursor = dbManager.fetch();
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(DBHelper._ID));
+                //int id = cursor.getInt(cursor.getColumnIndex(DBHelper._ID));
                 String title = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE));
                 double price = cursor.getDouble(cursor.getColumnIndex(DBHelper.PRICE));
                 int image = cursor.getInt(cursor.getColumnIndex(DBHelper.IMAGE));
                 int year = cursor.getInt(cursor.getColumnIndex(DBHelper.ANNEE));
-                AdModel adModel = new AdModel(id, title, price, image, year);
+                AdModel adModel = new AdModel(title, price, image, year);
                 listedAnnonces.add(adModel);
             } while (cursor.moveToNext());
             cursor.close();

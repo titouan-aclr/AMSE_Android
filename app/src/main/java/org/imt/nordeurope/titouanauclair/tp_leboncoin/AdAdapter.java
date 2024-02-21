@@ -3,6 +3,7 @@ package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -30,19 +31,20 @@ public class AdAdapter extends BaseAdapter {
     public long getItemId(int i) { return adModelArrayList.get(i).getIdAnnonce() ; } // Return ad id i
 
     @Override
-    public android.view.View getView(int i, android.view.View convertView, ViewGroup parent) {
+
+    public View getView(int i, View convertView, ViewGroup parent) {
         AdModel ad = adModelArrayList.get(i);
         convertView = inflater.inflate(R.layout.item_listview_ad, null);
 
         ImageView imageAnnonce_item = convertView.findViewById(R.id.imageAnnonce_item);
         TextView nomAnnonce_item = convertView.findViewById(R.id.nomAnnonce_item);
         TextView prixAnnonce_item = convertView.findViewById(R.id.prixAnnonce_item) ;
-        //TextView anneeAnnonce_item = convertView.findViewById(R.id.anneeAnnonce_item) ;
+        TextView anneeAnnonce_item = convertView.findViewById(R.id.anneeAnnonce_item) ;
 
         imageAnnonce_item.setImageResource(adModelArrayList.get(i).getImageAnnonce());
         nomAnnonce_item.setText(adModelArrayList.get(i).getNomAnnonce());
         prixAnnonce_item.setText(adModelArrayList.get(i).getPrixAnnonce().toString() + " €");
-        //anneeAnnonce_item.setText(String.valueOf(adModelArrayList.get(i).getAnneeAnnonce()));
+        anneeAnnonce_item.setText(String.valueOf(adModelArrayList.get(i).getAnneeAnnonce()));
         return convertView;
     }
 }

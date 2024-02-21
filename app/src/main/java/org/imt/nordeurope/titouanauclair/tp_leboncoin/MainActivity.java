@@ -13,19 +13,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DBManager dbManager = DBManager.getDBManager(getApplicationContext());
+        dbManager.open();
+        dbManager.resetDatabase();
+        dbManager.init();
+        dbManager.close();
     }
 
     public void onClickList(View view){
-        Intent lancementSecondeActivite = new Intent(MainActivity.this , AnnoncesListe.class );
-        Log.d("Button click", "Clic sur list");
-        startActivity (lancementSecondeActivite);
+        Intent lauchListActivity = new Intent(MainActivity.this , AnnoncesListe.class );
+        startActivity (lauchListActivity);
     }
 
     public void onClickAdd(View view){
-        //Intent lancementSecondeActivite = new Intent(MainActivity.this , SecondActivity . class );
-        Log.d("Button click", "Clic sur add");
-        Intent lancementSecondeActivite = new Intent(MainActivity.this , VueAnnonce.class );
-        startActivity (lancementSecondeActivite);
+        Intent LauchAddActivity = new Intent(MainActivity.this , VueAnnonce.class );
+        startActivity (LauchAddActivity);
     }
 
 }
