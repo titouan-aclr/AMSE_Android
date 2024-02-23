@@ -61,21 +61,18 @@
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="156dp"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="41dp"
         android:text="Publier"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/mail" />
 
     <EditText
         android:id="@+id/price"
-        android:layout_width="249dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="167dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="13dp"
         android:ems="10"
         android:hint="Prix"
         android:inputType="text"
@@ -87,9 +84,9 @@
         android:id="@+id/imageProduct"
         android:layout_width="188dp"
         android:layout_height="175dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="112dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="204dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar"
@@ -97,41 +94,87 @@
 
     <EditText
         android:id="@+id/marque"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="161dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="38dp"
         android:ems="10"
         android:hint="Marque"
         android:inputType="text"
         android:textColorHint="#A9A9A9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price" />
+        app:layout_constraintStart_toEndOf="@+id/imageProduct"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/description"
         android:layout_width="342dp"
         android:layout_height="160dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="26dp"
         android:ems="10"
         android:hint="Description"
         android:inputType="text"
         android:textColorHint="#A9A9A9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/annee" />
+        app:layout_constraintTop_toBottomOf="@+id/price" />
 
     <Spinner
         android:id="@+id/annee"
-        android:layout_width="342dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="161dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="12dp"
         android:hint="Annee"
         android:inputType="text"
         android:textColorHint="#A9A9A9"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageProduct"
         app:layout_constraintTop_toBottomOf="@+id/marque" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="Telephone"
+        android:textColorHint="#A9A9A9"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    <EditText
+        android:id="@+id/mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="42dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:textColorHint="#A9A9A9"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/phone" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="62dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:srcCompat="@drawable/tel" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="68dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="29dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:srcCompat="@drawable/mail" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

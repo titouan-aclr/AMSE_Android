@@ -36,6 +36,8 @@ public class VueAnnonce extends AppCompatActivity {
     public Spinner annee;
     public TextView description;
     private Button sendButton;
+    private TextView phone;
+    private  TextView mail;
     private String filePath;
     private static final int PICK_IMAGE_REQUEST = 1;
     @Override
@@ -47,6 +49,9 @@ public class VueAnnonce extends AppCompatActivity {
         nom = (TextView) findViewById(R.id.marque);
         annee = (Spinner) findViewById(R.id.annee);
         description = (TextView) findViewById(R.id.description);
+        phone = (TextView) findViewById(R.id.phone);
+        mail = (TextView) findViewById(R.id.mail);
+
         sendButton = (Button) findViewById(R.id.sendButton);
 
         List<String> yearsList = new ArrayList<>();
@@ -70,7 +75,13 @@ public class VueAnnonce extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdModel nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()),"0645323232","abcd@gmail.com",description.getText().toString());
+                AdModel nouvelleAnnonce;
+
+                if ((phone.getText() != "") && (mail.getText() != "")) {
+                    nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()), phone.getText().toString(), mail.getText().toString(), description.getText().toString());
+                } else {
+                    nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()), description.getText().toString());
+                }
 
                 DBManager dbManager = DBManager.getDBManager(getApplicationContext());
 
