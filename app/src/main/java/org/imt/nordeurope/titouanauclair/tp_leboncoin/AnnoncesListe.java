@@ -56,7 +56,7 @@ public class AnnoncesListe extends AppCompatActivity {
         this.SeekBarAnnee.setProgress(findMaxYear(listedAnnonces));
         this.annee_max_visualisation.setText("Année maximum de recherche : " + Integer.toString(findMaxYear(listedAnnonces)));
 
-        contenuBarreDeRecherche = String.valueOf((EditText) findViewById(R.id.barreDeRecherche));
+
 
 
         SeekBarAnnee.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
