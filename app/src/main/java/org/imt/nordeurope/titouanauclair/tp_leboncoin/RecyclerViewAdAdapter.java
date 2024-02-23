@@ -1,6 +1,8 @@
 package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class RecyclerViewAdAdapter extends
         RecyclerView.Adapter<RecyclerViewAdAdapter.RecyclerViewHolder>{
     private ArrayList<AdModel> data;
+    private final Context context;
     private boolean isListView = true;
     private static AdAdapter.OnItemClickListener listener;
 
-    public RecyclerViewAdAdapter(ArrayList<AdModel> data) {
+    public RecyclerViewAdAdapter(ArrayList<AdModel> data, Context context) {
         this.data = data;
+        this.context = context;
     }
 
     public void setIsListView(boolean isListView) {
@@ -48,9 +54,30 @@ public class RecyclerViewAdAdapter extends
         AdModel ad = data.get(position);
         holder.nomAnnonce.setText(ad.getNomAnnonce());
         holder.prixAnnonce.setText(ad.getPrixAnnonceString());
-        holder.imageView.setImageResource(ad.getImageAnnonce());
         holder.anneeAnnonce.setText(String.valueOf(ad.getAnneeAnnonce()));
+        String file_path = ad.getImageAnnonce();
+        if (file_path.endsWith(".jpg")){
+            loadImageFromContentUri(file_path,holder.imageView);
+
+        }else{
+            loadImage(file_path,holder.imageView);
+        }
     }
+
+    public void loadImage(String resName, ImageView imageView) {
+        int resId = context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
+
+        if (resId != 0) {
+            Drawable drawable = context.getResources().getDrawable(resId);
+            imageView.setImageDrawable(drawable);
+        }
+    }
+    public void loadImageFromContentUri(String filePath, ImageView imageView) {
+        Glide.with(context)
+                .load(filePath)
+                .into(imageView);
+    }
+
     @Override
     public int getItemCount() {return data.size();}
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

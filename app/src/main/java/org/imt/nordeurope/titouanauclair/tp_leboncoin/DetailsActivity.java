@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.graphics.text.LineBreaker;
 import android.net.Uri;
 import android.os.Build;
@@ -15,11 +18,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.w3c.dom.Text;
 
 public class DetailsActivity extends AppCompatActivity {
 
     private AdModel model;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void initData() {
+
         ImageView image = findViewById(R.id.imageAnnonce_details);
         TextView titre = findViewById(R.id.nomAnnonce_details);
         TextView annee = findViewById(R.id.anneeAnnonce_details);
@@ -43,7 +50,12 @@ public class DetailsActivity extends AppCompatActivity {
         Button phoneButton = findViewById(R.id.phoneButton);
         Button emailButton = findViewById(R.id.emailButton);
 
-        image.setImageResource(model.getImageAnnonce());
+        String file_path = model.getImageAnnonce();
+        if (file_path.endsWith(".jpg")){
+            loadImageFromContentUri(file_path,image);
+        }else{
+            loadImage(file_path,image);
+        }
         titre.setText(model.getNomAnnonce());
         annee.setText("Année : " + model.getAnneeAnnonce());
         prix.setText(model.getPrixAnnonceString());
@@ -54,6 +66,19 @@ public class DetailsActivity extends AppCompatActivity {
 
         if(model.getPhoneNumber() == null) phoneButton.setEnabled(false);
         if(model.getEmail() == null) emailButton.setEnabled(false);
+    }
+    public void loadImage(String resName, ImageView imageView) {
+        int resId = context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
+
+        if (resId != 0) {
+            Drawable drawable = context.getResources().getDrawable(resId);
+            imageView.setImageDrawable(drawable);
+        }
+    }
+    public void loadImageFromContentUri(String filePath, ImageView imageView) {
+        Glide.with(context)
+                .load(filePath)
+                .into(imageView);
     }
 
     @Override
