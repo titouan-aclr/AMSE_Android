@@ -3,6 +3,9 @@ package org.imt.nordeurope.titouanauclair.tp_leboncoin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.annotation.SuppressLint;
@@ -10,8 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.content.Intent;
+import android.database.Cursor;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,14 +24,17 @@ import java.util.ArrayList;
 public class AnnoncesListe extends AppCompatActivity {
 
     public ArrayList<AdModel> listedAnnonces = new ArrayList<>();
-    ListView listView;
     public ArrayList<AdModel> listedAnnoncesFiltrees = new ArrayList<>();
-    private static AdAdapter adapter;
     private SeekBar SeekBarAnnee;
     int annee_max =2024;
     TextView annee_max_visualisation;
-    private EditText barre_de_recherche;
-    String contenuBarreDeRecherche="";
+    RecyclerView recyclerView;
+    private static RecyclerViewAdAdapter adAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
+    private Menu menu;
+    private boolean isListView = true;
+    private DBManager dbManager;
 
 
 
@@ -37,15 +43,30 @@ public class AnnoncesListe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annonces_liste);
-        listView = findViewById(R.id.listeVehicules);
 
-        createList();
+        recyclerView = findViewById(R.id.recyclerView);
+
+        dbManager = DBManager.getDBManager(getApplicationContext());
+        dbManager.open();
+        loadFromDatabase();
+
+        linearLayoutManager = new LinearLayoutManager(this);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        adAdapter = new RecyclerViewAdAdapter(listedAnnoncesFiltrees, getApplicationContext());
+        recyclerView.setAdapter(adAdapter);
+
+        adAdapter.setOnItemClickListener(new AdAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(AnnoncesListe.this,DetailsActivity.class);
+                intent.putExtra("MODEL", listedAnnonces.get(position));
+                startActivity(intent);
+            }
+        });
 
         filtrageListes();
-
-        adapter = new AdAdapter(getApplicationContext(), listedAnnoncesFiltrees);
-
-        listView.setAdapter(adapter);
         this.annee_max_visualisation = (TextView) findViewById(R.id.valueBar);
         this.SeekBarAnnee = (SeekBar) findViewById(R.id.seekBarAnnee);
         this.SeekBarAnnee.setMax(findMaxYear(listedAnnonces));
@@ -53,102 +74,51 @@ public class AnnoncesListe extends AppCompatActivity {
             this.SeekBarAnnee.setMin(findMinYear(listedAnnonces));
         }
 
+        setUptSeekBar();
+
         this.SeekBarAnnee.setProgress(findMaxYear(listedAnnonces));
         this.annee_max_visualisation.setText("Année maximum de recherche : " + Integer.toString(findMaxYear(listedAnnonces)));
-
-
-
-
-        SeekBarAnnee.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                annee_max = progress;
-                annee_max_visualisation.setText("Année maximum de recherche : " + String.valueOf(annee_max));
-                listedAnnoncesFiltrees.clear();
-                filtrageListes(); //
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
-
 
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbManager.close();
+    }
+    private void loadFromDatabase() {
+        Cursor cursor = dbManager.fetch();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                //int id = cursor.getInt(cursor.getColumnIndex(DBHelper._ID));
+                String title = cursor.getString(cursor.getColumnIndex(DBHelper.TITLE));
+                double price = cursor.getDouble(cursor.getColumnIndex(DBHelper.PRICE));
+                String image = cursor.getString(cursor.getColumnIndex(DBHelper.IMAGE));
+                int year = cursor.getInt(cursor.getColumnIndex(DBHelper.ANNEE));
+                String phone = cursor.getString(cursor.getColumnIndex(DBHelper.PHONE));
+                String mail = cursor.getString(cursor.getColumnIndex(DBHelper.MAIL));
+                String description = cursor.getString(cursor.getColumnIndex(DBHelper.DESCRIPTION));
+                AdModel adModel = new AdModel(title, price, image, year, phone, mail, description);
+                listedAnnonces.add(adModel);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.actionChangeDisplayMode:
+                changeDisplayMode();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-    
-    void createList(){
-        listedAnnonces.add(new AdModel("Citroën SM", 49800.0, R.drawable.citroen_sm, 1970));
-        listedAnnonces.add(new AdModel("Range Rover", 57500.0, R.drawable.range_rover, 1970));
-        listedAnnonces.add(new AdModel("Autobianchi A112 Abarth", 14900.0, R.drawable.autobianchi_a112_abarth, 1971));
-        listedAnnonces.add(new AdModel("Alpine A310", 38900.0, R.drawable.alpine_a310, 1971));
-        listedAnnonces.add(new AdModel("Fiat 130 Coupé", 11900.0, R.drawable.fiat_130_coupe, 1971));
-        listedAnnonces.add(new AdModel("Alfa Romeo Alfasud", 12900.0, R.drawable.alfasud, 1972));
-        listedAnnonces.add(new AdModel("Renault 5", 9500.0, R.drawable.renault_5, 1972));
-        listedAnnonces.add(new AdModel("Lancia Stratos", 373750.0, R.drawable.lancia_stratos, 1973));
-        listedAnnonces.add(new AdModel("Matra Bagheera", 9000.0, R.drawable.matra_bagheera, 1973));
-        listedAnnonces.add(new AdModel("Citroën CX", 16990.0, R.drawable.citroen_cx, 1974));
-        listedAnnonces.add(new AdModel("Lamborghini Countach", 597823.0, R.drawable.lambo_countach, 1974));
-        listedAnnonces.add(new AdModel("Volkswagen Golf", 23990.0, R.drawable.vw_golf, 1974));
-        listedAnnonces.add(new AdModel("Jaguar XJS", 32000.0, R.drawable.jaguar_xjs, 1975));
-        listedAnnonces.add(new AdModel("Ferrari 308 GTB", 160977.0, R.drawable.ferrari_308_gtb, 1975));
-        listedAnnonces.add(new AdModel("Peugeot 604", 7500.0, R.drawable.peugeot_604, 1975));
-        listedAnnonces.add(new AdModel("Renault 30", 4990.0, R.drawable.renault_30, 1975));
-        listedAnnonces.add(new AdModel("Simca 1307", 16151.0, R.drawable.simca_1307, 1975));
-        listedAnnonces.add(new AdModel("Triumph TR7", 7260.0, R.drawable.triumph_tr7, 1975));
-        listedAnnonces.add(new AdModel("Porsche 924", 11900.0, R.drawable.porsche_924, 1976));
-        listedAnnonces.add(new AdModel("Fiat 131 Abarth", 70273.0, R.drawable.fiat_131_abarth, 1976));
-        listedAnnonces.add(new AdModel("Volvo 240", 6890.0, R.drawable.volvo_240, 1976));
-        listedAnnonces.add(new AdModel("Audi 100 5C", 12000.0, R.drawable.audi_100, 1977));
-        listedAnnonces.add(new AdModel("BMW 323i", 119990.0, R.drawable.bmw_323i, 1977));
-        listedAnnonces.add(new AdModel("Porsche 928", 69900.0, R.drawable.porsche_928, 1977));
-    }
-
-/*
-    void filtrageListes(){
-        listedAnnoncesFiltrees.clear();
-        for(int i = 0; i< listedAnnonces.size(); i++){
-
-            if(!contenuBarreDeRecherche.equals("") && !contenuBarreDeRecherche.equals("Ma recherche")){
-                if (listedAnnonces.get(i).getNomAnnonce().contains(contenuBarreDeRecherche)){
-                    if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max){
-                        listedAnnoncesFiltrees.add(listedAnnonces.get(i));
-                    }
-                }
-            }
-            else
-            {
-                if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max){
-                    listedAnnoncesFiltrees.add(listedAnnonces.get(i));
-                }
-            }
-        }
-    }*/
-
 
     void filtrageListes(){
         listedAnnoncesFiltrees.clear();
@@ -178,7 +148,49 @@ public class AnnoncesListe extends AppCompatActivity {
         return annee_max_trouvee;
     }
 
+    private void changeDisplayMode() {
+        if(isListView){
+            adAdapter.setIsListView(false);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.setAdapter(adAdapter);
+            isListView = false;
+            menu.getItem(0).setIcon(R.drawable.baseline_view_list_24);
+        } else {
+            adAdapter.setIsListView(true);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(adAdapter);
+            isListView = true;
+            menu.getItem(0).setIcon(R.drawable.baseline_grid_view_24);
+        }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.list_menu, menu);
+        return true;
+    }
+
+    void setUptSeekBar(){
+        SeekBarAnnee.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                annee_max = progress;
+                annee_max_visualisation.setText("Année maximum de recherche : " + String.valueOf(annee_max));
+                listedAnnoncesFiltrees.clear();
+                filtrageListes(); //
+                adAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
 }
 
 
