@@ -77,10 +77,11 @@ public class VueAnnonce extends AppCompatActivity {
             public void onClick(View v) {
                 AdModel nouvelleAnnonce;
 
-                if ((phone.getText() != "") && (mail.getText() != "")) {
-                    nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()), phone.getText().toString(), mail.getText().toString(), description.getText().toString());
-                } else {
+                if ((phone.getText().toString().isEmpty()) && (mail.getText().toString().isEmpty())) {
                     nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()), description.getText().toString());
+                } else {
+                    nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()), phone.getText().toString(), mail.getText().toString(), description.getText().toString());
+
                 }
 
                 DBManager dbManager = DBManager.getDBManager(getApplicationContext());
@@ -139,12 +140,10 @@ public class VueAnnonce extends AppCompatActivity {
                 return null;
             }
 
-            // Créez un fichier temporaire dans le répertoire de cache de l'application
             File cacheDir = context.getCacheDir();
             String imageName = "image_" + System.currentTimeMillis() + ".jpg";
             File imageFile = new File(cacheDir, imageName);
 
-            // Copiez l'image depuis son emplacement actuel vers le fichier temporaire
             inputStream = context.getContentResolver().openInputStream(imageUri);
             outputStream = new FileOutputStream(imageFile);
             byte[] buffer = new byte[1024];
