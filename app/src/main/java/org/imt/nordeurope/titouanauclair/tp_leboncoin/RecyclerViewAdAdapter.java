@@ -75,6 +75,7 @@ public class RecyclerViewAdAdapter extends
     public void loadImageFromContentUri(String filePath, ImageView imageView) {
         Glide.with(context)
                 .load(filePath)
+                .fitCenter()
                 .into(imageView);
     }
 

@@ -36,7 +36,9 @@ public class VueAnnonce extends AppCompatActivity {
     public Spinner annee;
     public TextView description;
     private Button sendButton;
-    private String filePath;
+    private TextView phone;
+    private  TextView mail;
+    private String filePath = "baseline_image_24";
     private static final int PICK_IMAGE_REQUEST = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class VueAnnonce extends AppCompatActivity {
         nom = (TextView) findViewById(R.id.marque);
         annee = (Spinner) findViewById(R.id.annee);
         description = (TextView) findViewById(R.id.description);
+        phone = (TextView) findViewById(R.id.phone);
+        mail = (TextView) findViewById(R.id.mail);
+
         sendButton = (Button) findViewById(R.id.sendButton);
 
         List<String> yearsList = new ArrayList<>();
@@ -70,7 +75,14 @@ public class VueAnnonce extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdModel nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()),"0645323232","abcd@gmail.com",description.getText().toString());
+                AdModel nouvelleAnnonce;
+
+                if ((phone.getText().toString().isEmpty()) && (mail.getText().toString().isEmpty())) {
+                    nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()), description.getText().toString());
+                } else {
+                    nouvelleAnnonce = new AdModel(nom.getText().toString(), Double.parseDouble(price.getText().toString()), filePath, Integer.parseInt(annee.getSelectedItem().toString()), phone.getText().toString(), mail.getText().toString(), description.getText().toString());
+
+                }
 
                 DBManager dbManager = DBManager.getDBManager(getApplicationContext());
 
@@ -128,12 +140,10 @@ public class VueAnnonce extends AppCompatActivity {
                 return null;
             }
 
-            // Créez un fichier temporaire dans le répertoire de cache de l'application
             File cacheDir = context.getCacheDir();
             String imageName = "image_" + System.currentTimeMillis() + ".jpg";
             File imageFile = new File(cacheDir, imageName);
 
-            // Copiez l'image depuis son emplacement actuel vers le fichier temporaire
             inputStream = context.getContentResolver().openInputStream(imageUri);
             outputStream = new FileOutputStream(imageFile);
             byte[] buffer = new byte[1024];
