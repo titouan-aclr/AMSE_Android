@@ -38,7 +38,7 @@ public class VueAnnonce extends AppCompatActivity {
     private Button sendButton;
     private TextView phone;
     private  TextView mail;
-    private String filePath;
+    private String filePath = "baseline_image_24";
     private static final int PICK_IMAGE_REQUEST = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
