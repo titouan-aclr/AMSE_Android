@@ -85,8 +85,8 @@ public class AnnoncesListe extends AppCompatActivity {
 
         this.SeekBarAnnee.setProgress(findMaxYear(listedAnnonces));
         this.SeekBarPrix.setProgress((int) findMaxPrice(listedAnnonces));
-        this.annee_max_visualisation.setText("Année maximum de recherche : " + Integer.toString(findMaxYear(listedAnnonces)));
-        this.prix_max_visualisation.setText("Prix maximum de recherche : " + String.format("%,.0f", findMaxPrice(listedAnnonces)) + "€");
+        this.annee_max_visualisation.setText("Année max : " + Integer.toString(findMaxYear(listedAnnonces)));
+        this.prix_max_visualisation.setText("Prix max : " + String.format("%,.0f", findMaxPrice(listedAnnonces)) + "€");
 
         SeekBarAnnee.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
