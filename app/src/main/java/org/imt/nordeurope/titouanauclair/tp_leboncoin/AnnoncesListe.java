@@ -26,8 +26,11 @@ public class AnnoncesListe extends AppCompatActivity {
     public ArrayList<AdModel> listedAnnonces = new ArrayList<>();
     public ArrayList<AdModel> listedAnnoncesFiltrees = new ArrayList<>();
     private SeekBar SeekBarAnnee;
+    private SeekBar SeekBarPrix;
     int annee_max =2024;
+    int prix_max = 10000000;
     TextView annee_max_visualisation;
+    TextView prix_max_visualisation;
     RecyclerView recyclerView;
     private static RecyclerViewAdAdapter adAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -67,18 +70,61 @@ public class AnnoncesListe extends AppCompatActivity {
         });
 
         filtrageListes();
-        this.annee_max_visualisation = (TextView) findViewById(R.id.valueBar);
+        this.annee_max_visualisation = (TextView) findViewById(R.id.valueBarAnnee);
+        this.prix_max_visualisation = (TextView) findViewById(R.id.valueBarPrix);
         this.SeekBarAnnee = (SeekBar) findViewById(R.id.seekBarAnnee);
+        this.SeekBarPrix = (SeekBar) findViewById(R.id.seekBarPrix);
         this.SeekBarAnnee.setMax(findMaxYear(listedAnnonces));
+        this.SeekBarPrix.setMax((int) findMaxPrice(listedAnnonces));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             this.SeekBarAnnee.setMin(findMinYear(listedAnnonces));
+            this.SeekBarPrix.setMin((int) findMinPrice(listedAnnonces));
         }
 
         setUptSeekBar();
 
         this.SeekBarAnnee.setProgress(findMaxYear(listedAnnonces));
+        this.SeekBarPrix.setProgress((int) findMaxPrice(listedAnnonces));
         this.annee_max_visualisation.setText("Année maximum de recherche : " + Integer.toString(findMaxYear(listedAnnonces)));
+        this.prix_max_visualisation.setText("Prix maximum de recherche : " + String.format("%,.0f", findMaxPrice(listedAnnonces)) + "€");
 
+        SeekBarAnnee.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                annee_max = progress;
+                annee_max_visualisation.setText("Année maximum de recherche : " + String.valueOf(annee_max));
+                listedAnnoncesFiltrees.clear();
+                filtrageListes(); //
+                adAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        SeekBarPrix.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                prix_max = progress;
+                prix_max_visualisation.setText("Prix maximum de recherche : " + String.format("%,.0f", new Double(prix_max)) + "€");
+                listedAnnoncesFiltrees.clear();
+                filtrageListes(); //
+                adAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -123,7 +169,7 @@ public class AnnoncesListe extends AppCompatActivity {
     void filtrageListes(){
         listedAnnoncesFiltrees.clear();
         for(int i = 0; i< listedAnnonces.size(); i++){
-            if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max){
+            if(listedAnnonces.get(i).getAnneeAnnonce()<=annee_max && listedAnnonces.get(i).getPrixAnnonce()<=prix_max){
                 listedAnnoncesFiltrees.add(listedAnnonces.get(i));
             }
         }
@@ -133,10 +179,20 @@ public class AnnoncesListe extends AppCompatActivity {
         int annee_min_trouvee = 2024;
         for(int i=0; i<liste.size(); i++){
             if(liste.get(i).getAnneeAnnonce()<annee_min_trouvee){
-                    annee_min_trouvee = liste.get(i).getAnneeAnnonce();
+                annee_min_trouvee = liste.get(i).getAnneeAnnonce();
             }
         }
         return annee_min_trouvee;
+    }
+
+    double findMinPrice(ArrayList<AdModel> liste){
+        double prix_min_trouve = 100000000;
+        for(int i=0; i<liste.size(); i++){
+            if(liste.get(i).getPrixAnnonce()<prix_min_trouve){
+                prix_min_trouve = liste.get(i).getPrixAnnonce();
+            }
+        }
+        return prix_min_trouve;
     }
     int findMaxYear(ArrayList<AdModel> liste){
         int annee_max_trouvee = 0;
@@ -146,6 +202,16 @@ public class AnnoncesListe extends AppCompatActivity {
             }
         }
         return annee_max_trouvee;
+    }
+
+    double findMaxPrice(ArrayList<AdModel> liste){
+        double prix_max_trouve = 0;
+        for(int i=0; i<liste.size(); i++){
+            if(liste.get(i).getPrixAnnonce()>prix_max_trouve){
+                prix_max_trouve = liste.get(i).getPrixAnnonce();
+            }
+        }
+        return prix_max_trouve;
     }
 
     private void changeDisplayMode() {
@@ -192,6 +258,5 @@ public class AnnoncesListe extends AppCompatActivity {
         });
     }
 }
-
 
 
