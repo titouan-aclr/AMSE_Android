@@ -29,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="AnnÃ©e maximale :"
+                android:text="Annéee max :"
                 android:gravity="center"/>
 
             <SeekBar
@@ -54,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:text="Prix maximal : "
+                android:text="Prix max : "
                 android:gravity="center"/>
 
             <SeekBar
