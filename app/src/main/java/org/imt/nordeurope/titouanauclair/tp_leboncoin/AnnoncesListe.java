@@ -64,7 +64,7 @@ public class AnnoncesListe extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(AnnoncesListe.this,DetailsActivity.class);
-                intent.putExtra("MODEL", listedAnnonces.get(position));
+                intent.putExtra("MODEL", listedAnnoncesFiltrees.get(position));
                 startActivity(intent);
             }
         });
